@@ -1,5 +1,6 @@
 # Simple Reflex Agent for Vacuum Cleaner World
 
+# Function to simulate the vacuum cleaner agent
 def reflex_vacuum_agent(location, status):
     if status == "Dirty":
         return "Suck"
@@ -8,20 +9,11 @@ def reflex_vacuum_agent(location, status):
     elif location == "B":
         return "Left"
 
+# Test the reflex agent
+# Environment: location A is dirty, location B is clean
 location = "A"
 status = "Dirty"
-locations = ["A", "B"]
 
-for _ in range(5):
-    action = reflex_vacuum_agent(location, status)
-    print(f"Location: {location}, Status: {status}, Action: {action}")
-
-    if action == "Suck":
-        status = "Clean"
-    elif action == "Right":
-        location = "B"
-    elif action == "Left":
-        location = "A"
-
-
-        
+# Agent's action
+action = reflex_vacuum_agent(location, status)
+print(f"Location: {location}, Status: {status}, Action: {action}")
