@@ -1,12 +1,32 @@
-def move_towards_goal(position, goal):
-    while position < goal:
-        position += 1
-        print(f"Current Position: {position}")
-    print("Reached the goal!")
+# Simple Reflex Agent for Vacuum Cleaner World
 
-# Set initial position and goal position
-initial_position = 0
-goal_position = 5
+# Function to simulate the vacuum cleaner agent
+def reflex_vacuum_agent(location, status):
+    if status == "Dirty":
+        return "Suck"
+    elif location == "A":
+        return "Right"
+    elif location == "B":
+        return "Left"
 
-# Move towards the goal
-move_towards_goal(initial_position, goal_position)
+# Test the reflex agent
+# Environment: location A is dirty, location B is clean initially
+location = "A"
+status = "Dirty"
+
+# Define locations
+locations = ["A", "B"]
+
+# Simulate agent actions
+for _ in range(5):  # Simulate for 5 iterations
+    # Agent's action
+    action = reflex_vacuum_agent(location, status)
+    print(f"Location: {location}, Status: {status}, Action: {action}")
+
+    # Update status
+    if action == "Suck":
+        status = "Clean"
+    elif action == "Right":
+        location = "B"
+    elif action == "Left":
+        location = "A"
