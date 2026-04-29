@@ -139,8 +139,6 @@ class GridWorld:
             for nr, nc in self._neighbors(wr, wc):
                 self.grid[nr][nc].add(CellContent.STENCH)
 
-    # ── Percepts visible to the agent ───────────────────────────────────────
-
     def get_percepts(self) -> dict:
         r, c = self.agent_pos
         cell = self.grid[r][c]
@@ -148,11 +146,11 @@ class GridWorld:
             "breeze":  CellContent.BREEZE  in cell,
             "stench":  CellContent.STENCH  in cell,
             "glitter": CellContent.GOLD    in cell and not self.has_gold,
-            "bump":    False,               # set dynamically on failed move
-            "scream":  False,               # set dynamically after shoot
+            "bump":    False,              
+            "scream":  False,               
         }
 
-    # ── Actions ──────────────────────────────────────────────────────────────
+   
 
     def _apply_penalty(self, cost: int = -1):
         self.score += cost
@@ -167,7 +165,7 @@ class GridWorld:
         dr, dc = DIRECTIONS[direction]
         r, c = self.agent_pos
         nr, nc = r + dr, c + dc
-        self._apply_penalty()          # -1 per action
+        self._apply_penalty()          
         self.moves += 1
         percepts = self.get_percepts()
 
@@ -178,7 +176,7 @@ class GridWorld:
 
         self.agent_pos = (nr, nc)
 
-        # Check hazards
+        
         cell = self.grid[nr][nc]
         if CellContent.WUMPUS in cell and self.wumpus_alive:
             self.score -= 1000
@@ -222,7 +220,7 @@ class GridWorld:
             self.message = "No arrow left!"
             return {"ok": True, "fired": False}
 
-        self._apply_penalty(10)        # shooting costs 10
+        self._apply_penalty(10)       
         self.moves += 1
         self.has_arrow = False
 
@@ -258,7 +256,7 @@ class GridWorld:
         if self.agent_pos == self.start:
             self.game_over = True
             if self.has_gold:
-                self.score += 500    # bonus for escaping with gold
+                self.score += 500   
                 self.win = True
                 self.message = "Escaped with the GOLD! YOU WIN! 🏆"
             else:
@@ -267,8 +265,6 @@ class GridWorld:
             return {"ok": True, "escaped": True, "win": self.win}
         self.message = "You can only climb out from the start cell."
         return {"ok": True, "escaped": False}
-
-    # ── Display ──────────────────────────────────────────────────────────────
 
     def render(self, reveal: bool = False) -> str:
         """
@@ -323,9 +319,6 @@ class GridWorld:
             f"Arrow: {'✓' if self.has_arrow else '✗'}  |  "
             f"Wumpus: {'alive' if self.wumpus_alive else 'dead'}"
         )
-
-
-# ── Interactive CLI ────────────────────────────────────────────────────────────
 
 HELP_TEXT = """
 Commands
@@ -390,7 +383,7 @@ def play():
             print(f"Reveal mode: {'ON' if reveal else 'OFF'}")
 
         elif cmd == "status":
-            pass   # already printed above
+            pass   
 
         elif cmd == "move" and len(tokens) >= 2:
             result = world.move(tokens[1])
@@ -410,7 +403,7 @@ def play():
             print("  Unknown command. Type 'help' for a list of commands.")
 
 
-# ── Simple Demo (non-interactive) ──────────────────────────────────────────────
+
 
 def demo():
     """Run a scripted demo to show the environment programmatically."""
